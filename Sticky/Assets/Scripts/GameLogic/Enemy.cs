@@ -5,14 +5,24 @@ public class Enemy : Actor
 {
     [SerializeField] private ProjType[] projectileTypes = null;
 
-    public int interval = 1;
-    public float intervalTimer = 0;
+    [SerializeField] private float minFireRate = 3;
+    [SerializeField] private float maxFireRate = 10;
+
+    private float nextFireTime = 0;
+    private float fireTimer = 0;
 
     private Transform myTransform;
 
     private void Awake()
     {
         myTransform = transform;
+
+        nextFireTime = Random.Range(minFireRate, maxFireRate);
+    }
+
+    public void SetupEnemy(Vector3 startPosition)
+    {
+        myTransform.position = startPosition;
     }
 
     public BasicProjectile GetProjectile()
@@ -24,13 +34,14 @@ public class Enemy : Actor
 
     void Update()
     {
-        intervalTimer += Time.deltaTime;
+        fireTimer += Time.deltaTime;
 
-        if (intervalTimer > interval)
+        if (fireTimer >= nextFireTime)
         {
             BasicProjectile _proj = GetProjectile();
             _proj.FireProjectile(myTransform.position, myTransform.rotation);
-            intervalTimer = 0;
+            nextFireTime = Random.Range(minFireRate, maxFireRate);
+            fireTimer = 0;
         }
     }
 }
