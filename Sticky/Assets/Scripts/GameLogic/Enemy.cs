@@ -8,7 +8,14 @@ public class Enemy : Actor
     public int interval = 1;
     public float intervalTimer = 0;
 
-    public Enemy GetProjectile()
+    private Transform myTransform;
+
+    private void Awake()
+    {
+        myTransform = transform;
+    }
+
+    public BasicProjectile GetProjectile()
     {
         //Randomly pick a projectile type from available types
         //Get pooled projectile of that type through projectile manager
@@ -21,7 +28,8 @@ public class Enemy : Actor
 
         if (intervalTimer > interval)
         {
-            GetProjectile();
+            BasicProjectile _proj = GetProjectile();
+            _proj.FireProjectile(myTransform.position, myTransform.rotation);
             intervalTimer = 0;
         }
     }

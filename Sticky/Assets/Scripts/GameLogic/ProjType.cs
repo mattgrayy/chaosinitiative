@@ -1,7 +1,7 @@
 ﻿public enum ProjType
 {
     BASIC = 0,
-    BOUNCE_SHOCK,
+    BOUNCE_KNOCK,
     BOUNCE_DAMAGE,
     VOID,
     COUNT
