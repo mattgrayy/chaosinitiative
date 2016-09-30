@@ -12,30 +12,20 @@ public class Player : Actor {
     {
         switch (playerNumber)
         {
+            case 0:
+                GetComponent<Rigidbody2D>().AddForce(Vector2.right * Input.GetAxis("XAxis" + (playerNumber + 1).ToString()) * movementForce * Time.deltaTime);
+                break;
             case 1:
-                transform.Translate(Vector2.right * Input.GetAxis("Mouse X") * 10 * Time.deltaTime); // Replace with "XAxis1"
+                GetComponent<Rigidbody2D>().AddForce(Vector2.right * Input.GetAxis("3Axis1") * movementForce * Time.deltaTime);
                 break;
             case 2:
-                transform.Translate(Vector2.right * Input.GetAxis("Mouse Y") * 10 * Time.deltaTime); // Replace with "XAxis2"
-                break;
-            case 3:
-                transform.Translate(Vector2.right * Input.GetAxis("Mouse ScrollWheel") * 100 * Time.deltaTime); // Replace with "XAxis3"
+                GetComponent<Rigidbody2D>().AddForce(Vector2.right * Input.GetAxis("7Axis1") * movementForce * Time.deltaTime);
                 break;
             default:
                 break;
         }
-        transform.Translate(Vector2.right * Input.GetAxis("XAxis" + (playerNumber + 1).ToString()) * 10 * Time.deltaTime);
+
+        //GetComponent<Rigidbody2D>().AddForce(Vector2.right * Input.GetAxis("XAxis" + (playerNumber + 1).ToString()) * movementForce * Time.deltaTime);
+
     }
-
-    /*
-    void OnCollisionEnter(Collider col)
-    {
-        if (col.tag == "Projectile")
-        {
-            //if (col.GetComponent<>)
-            //{
-
-            //}
-        }
-    }*/
 }
