@@ -1,10 +1,15 @@
 fileFormatVersion: 2
 guid: 57b16ac472ca33a4d8e47692b542c984
-timeCreated: 1475073848
+timeCreated: 1475235543
 licenseType: Pro
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - parentFolder: {instanceID: 0}
+  - basicProjPrefab: {instanceID: 0}
+  - bounceShockProjPrefab: {instanceID: 0}
+  - bounceDamageProjPrefab: {instanceID: 0}
+  - voidProjPrefab: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

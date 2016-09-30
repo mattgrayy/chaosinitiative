@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Player : Actor {
 
     public int playerNumber = 0;
+    public SpriteRenderer shieldSprite;
+    public ProjType shieldType;
 
     void Update()
     {
@@ -22,4 +25,16 @@ public class Player : Actor {
                 break;
         }
     }
+
+    /*
+    void OnCollisionEnter(Collider col)
+    {
+        if (col.tag == "Projectile")
+        {
+            //if (col.GetComponent<>)
+            //{
+
+            //}
+        }
+    }*/
 }
