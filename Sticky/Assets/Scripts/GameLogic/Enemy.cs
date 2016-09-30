@@ -15,6 +15,11 @@ public class Enemy : Actor
         myTransform = transform;
     }
 
+    public void SetupEnemy(Vector3 startPosition)
+    {
+        myTransform.position = startPosition;
+    }
+
     public BasicProjectile GetProjectile()
     {
         //Randomly pick a projectile type from available types
