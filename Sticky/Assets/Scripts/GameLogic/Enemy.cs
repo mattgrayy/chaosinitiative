@@ -38,6 +38,7 @@ public class Enemy : Actor
 
         if (fireTimer >= nextFireTime)
         {
+            // Do rays
             BasicProjectile _proj = GetProjectile();
             _proj.FireProjectile(myTransform.position, myTransform.rotation);
             nextFireTime = Random.Range(minFireRate, maxFireRate);
