@@ -24,6 +24,7 @@ public class Player : Actor {
             default:
                 break;
         }
+        transform.Translate(Vector2.right * Input.GetAxis("XAxis" + (playerNumber + 1).ToString()) * 10 * Time.deltaTime);
     }
 
     /*
