@@ -3,15 +3,20 @@ using System.Collections;
 
 public class Enemy : Actor
 {
-    [SerializeField] private ProjType[] projectileTypes = null;
+    [SerializeField] private ProjType[] projectileTypes = null; //An array of the types of projectile that can be fired
 
     [SerializeField] private float minFireRate = 3;
     [SerializeField] private float maxFireRate = 10;
 
+    private bool isSetup = false;
+
+    public static int numActiveEnemies { get; private set; } //total number of active enemies within the scene
+    public static void ResetActiveEnemies() { numActiveEnemies = 0; } //function to reset numActiveEnemies if needed
+
     private float nextFireTime = 0;
     private float fireTimer = 0;
 
-    private Transform myTransform;
+    private Transform myTransform = null;
 
     private void Awake()
     {
@@ -22,7 +27,15 @@ public class Enemy : Actor
 
     public void SetupEnemy(Vector3 startPosition)
     {
-        myTransform.position = startPosition;
+        //Sanity check to prevent SetupEnemy() getting called multiple times
+        if (!isSetup)
+        {
+            myTransform.position = startPosition;
+            myTransform.rotation = Quaternion.identity;
+            ++numActiveEnemies;
+            isSetup = true;
+        }
+        
     }
 
     public BasicProjectile GetProjectile()
@@ -35,7 +48,8 @@ public class Enemy : Actor
     void Update()
     {
         fireTimer += Time.deltaTime;
-
+        //Test Movement
+        transform.position += Vector3.down * Time.deltaTime * 0.25f;
         if (fireTimer >= nextFireTime)
         {
             // Do rays
@@ -43,6 +57,17 @@ public class Enemy : Actor
             _proj.FireProjectile(myTransform.position, myTransform.rotation);
             nextFireTime = Random.Range(minFireRate, maxFireRate);
             fireTimer = 0;
+        }
+    }
+
+    public void Death()
+    {
+        //Sanity check to prevent Death() getting called multiple times
+        if (isSetup)
+        {
+            gameObject.SetActive(false);
+            --numActiveEnemies;
+            isSetup = false;
         }
     }
 }

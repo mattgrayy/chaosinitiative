@@ -16,4 +16,9 @@ public class GameStartup : MonoBehaviour
             instance = this;
         }
     }
+
+    private void Start()
+    {
+        //LevelManager.instance.BeginLevel();
+    }
 }

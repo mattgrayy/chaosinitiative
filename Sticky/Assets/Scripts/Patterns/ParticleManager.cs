@@ -27,11 +27,6 @@ public class ParticleManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        GameStateManager.instance.StartListeningState(GameStates.STATE_PAUSE, PauseGameplayParticles, null);
-    }
-
     public ParticleEffect GetParticle(string _name)
     {
         IterativeBehaviourPool<ParticleEffect> pool;
@@ -54,7 +49,6 @@ public class ParticleManager : MonoBehaviour
 
     private void PauseGameplayParticles()
     {
-        GameStateManager.instance.StopListeningState(GameStates.STATE_PAUSE, PauseGameplayParticles, null);
         for(int i = 0; i < particleDictionary.Count; ++i)
         {
             foreach (ParticleEffect _particle in particleDictionary.Values.ToList()[i].currentPool)
@@ -62,12 +56,10 @@ public class ParticleManager : MonoBehaviour
                 _particle.Pause();
             }
         }
-        GameStateManager.instance.StartListeningState(GameStates.STATE_GAMEPLAY, ResumeGameplayParticles, null);
     }
 
     private void ResumeGameplayParticles()
     {
-        GameStateManager.instance.StopListeningState(GameStates.STATE_GAMEPLAY, ResumeGameplayParticles, null);
         for (int i = 0; i < particleDictionary.Count; ++i)
         {
             foreach (ParticleEffect _particle in particleDictionary.Values.ToList()[i].currentPool)
@@ -75,6 +67,5 @@ public class ParticleManager : MonoBehaviour
                 _particle.Resume();
             }
         }
-        GameStateManager.instance.StartListeningState(GameStates.STATE_PAUSE, PauseGameplayParticles, null);
     }
 }

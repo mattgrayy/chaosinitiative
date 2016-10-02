@@ -5,13 +5,15 @@ public class ProjectileManager : MonoBehaviour
 {
     public static ProjectileManager instance { get; private set; }
 
-    [SerializeField] private Transform parentFolder = null;
+    [SerializeField] private Transform parentFolder = null; //Sorting folder for pooled projectiles
 
+    //Prefabs for each projectile type
     [SerializeField] private BasicProjectile basicProjPrefab = null;
     [SerializeField] private BasicProjectile bounceKnockProjPrefab = null;
     [SerializeField] private BasicProjectile bounceDamageProjPrefab = null;
     [SerializeField] private VoidProjectile voidProjPrefab = null;
 
+    //Object pools for each projectile type
     private IterativeBehaviourPool<BasicProjectile> basicProjsPool;
     private IterativeBehaviourPool<BasicProjectile> bounceKnockProjsPool;
     private IterativeBehaviourPool<BasicProjectile> bounceDamageProjsPool;
@@ -33,6 +35,7 @@ public class ProjectileManager : MonoBehaviour
         }
     }
 
+    //Given a projectile type will get a pooled projectile of that type
     public BasicProjectile GetPooledProjectile(ProjType _type)
     {
         switch(_type)

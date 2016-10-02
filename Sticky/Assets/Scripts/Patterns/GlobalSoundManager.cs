@@ -41,45 +41,24 @@ public class GlobalSoundManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        GameStateManager.instance.StartListeningState(GameStates.STATE_PAUSE, PauseGameplaySounds, null);
-    }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.P))
-        {
-            GameStateManager.instance.ChangeState(GameStates.STATE_PAUSE);
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            GameStateManager.instance.ChangeState(GameStates.STATE_GAMEPLAY);
-        }
-    }
-
     private void PauseGameplaySounds()
     {
-        GameStateManager.instance.StopListeningState(GameStates.STATE_PAUSE, PauseGameplaySounds, null);
         foreach (AudioObject _audio in audioGameplayEffectsPool.currentPool)
         {
             _audio.Pause();
         }
         pauseMusic.PlayMusic(pausePlaylist, 1.0f, 1.0f);
         gameplayMusic.Pause(true, 3.0f);
-        GameStateManager.instance.StartListeningState(GameStates.STATE_GAMEPLAY, ResumeGameplaySounds, null);
     }
 
     private void ResumeGameplaySounds()
     {
-        GameStateManager.instance.StopListeningState(GameStates.STATE_GAMEPLAY, ResumeGameplaySounds, null);
         foreach (AudioObject _audio in audioGameplayEffectsPool.currentPool)
         {
             _audio.Resume();
         }
         pauseMusic.FadeOut(FadeOutResult.STOP, 3.0f);
         gameplayMusic.Resume(true, 3.0f);
-        GameStateManager.instance.StartListeningState(GameStates.STATE_PAUSE, PauseGameplaySounds, null);
     }
 
     public void ChangeVolumeMaster(float _volume)

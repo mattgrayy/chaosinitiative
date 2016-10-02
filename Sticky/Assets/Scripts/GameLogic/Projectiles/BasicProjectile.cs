@@ -3,17 +3,16 @@ using System.Collections;
 
 public class BasicProjectile : MonoBehaviour
 {
-    private ProjType type = ProjType.BASIC;
     private bool lethal = true;
    
-
     private Transform myTransform = null;
 
+    [SerializeField] protected bool canBounce = false;
     [SerializeField] protected int bounces = 6;
     [SerializeField] protected float projectileSpeed = 5.0f;
     public float x;
     public float y;
-    public Rigidbody2D ridg;
+    [SerializeField] protected Rigidbody2D ridg;
     public GameObject ball;
 
 
@@ -42,9 +41,8 @@ public class BasicProjectile : MonoBehaviour
 
     public void FireProjectile(Vector3 _pos, Quaternion _rot)
     {
-        
-     //   myTransform.position = _pos;
-     //   myTransform.rotation = _rot;
+        myTransform.position = _pos;
+        myTransform.rotation = _rot;
     }
 
     public void DestroyProjectile()

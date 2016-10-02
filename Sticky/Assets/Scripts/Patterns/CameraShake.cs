@@ -28,11 +28,6 @@ public class CameraShake : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        GameStateManager.instance.StartListeningState(GameStates.STATE_PAUSE, PauseShake, null);
-    }
-
     private void Update()
     {
         if (!isShakingPaused)
@@ -55,16 +50,12 @@ public class CameraShake : MonoBehaviour
 
     public void PauseShake()
     {
-        GameStateManager.instance.StopListeningState(GameStates.STATE_PAUSE, PauseShake, null);
         isShakingPaused = true;
-        GameStateManager.instance.StartListeningState(GameStates.STATE_GAMEPLAY, ResumeShake, null);
     }
 
     public void ResumeShake()
     {
-        GameStateManager.instance.StopListeningState(GameStates.STATE_PAUSE, ResumeShake, null);
         isShakingPaused = false;
-        GameStateManager.instance.StartListeningState(GameStates.STATE_GAMEPLAY, PauseShake, null);
     }
 
     public void ShakeCamera(float _duration, float _strength)
@@ -81,8 +72,8 @@ public class CameraShake : MonoBehaviour
 [UnityEditor.CustomEditor(typeof(CameraShake))]
 public class CameraShakeEditor : UnityEditor.Editor
 {
-    private float duration = 2.0f;
-    private float strength = 0.7f;
+    private float duration = 0.2f;
+    private float strength = 0.2f;
 
     public override void OnInspectorGUI()
     {

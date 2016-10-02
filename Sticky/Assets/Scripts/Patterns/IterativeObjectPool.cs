@@ -30,6 +30,7 @@ public class IterativeGameObjectPool : IterativeObjectPool<GameObject>
         poolIndex = 0;
         poolObject = _poolObject;
         parentTransform = _parent;
+        //Create default pool
         for (int i = 0; i < _startSize; ++i)
         {
             GameObject _obj = Object.Instantiate(poolObject);
@@ -43,6 +44,7 @@ public class IterativeGameObjectPool : IterativeObjectPool<GameObject>
     {
         for (int i = 0; i < pooledObjects.Count; ++i)
         {
+            //If already active move to next pooled object
             if (pooledObjects[poolIndex].activeSelf)
             {
                 ++poolIndex;
@@ -51,13 +53,14 @@ public class IterativeGameObjectPool : IterativeObjectPool<GameObject>
                     poolIndex = 0;
                 }
             }
+            //Found inactive pooled object so return it
             else
             {
                 pooledObjects[poolIndex].SetActive(true);
                 return pooledObjects[poolIndex];
             }
         }
-
+        //No free pooled object found so create a new one
         GameObject _obj = Object.Instantiate(poolObject);
         _obj.transform.SetParent(parentTransform);
         _obj.SetActive(true);
@@ -80,6 +83,7 @@ public class IterativeBehaviourPool<T> : IterativeObjectPool<T> where T : Behavi
         poolIndex = 0;
         poolObject = _poolObject;
         parentTransform = _parent;
+        //Create default pool
         for (int i = 0; i < _startSize; ++i)
         {
             T _obj = Object.Instantiate(poolObject);
@@ -93,6 +97,7 @@ public class IterativeBehaviourPool<T> : IterativeObjectPool<T> where T : Behavi
     {
         for (int i = 0; i < pooledObjects.Count; ++i)
         {
+            //If already active move to next pooled object
             if (pooledObjects[poolIndex].gameObject.activeSelf)
             {
                 ++poolIndex;
@@ -101,13 +106,14 @@ public class IterativeBehaviourPool<T> : IterativeObjectPool<T> where T : Behavi
                     poolIndex = 0;
                 }
             }
+            //Found inactive pooled object so return it
             else
             {
                 pooledObjects[poolIndex].gameObject.SetActive(true);
                 return pooledObjects[poolIndex];
             }
         }
-
+        //No free pooled object found so create a new one
         T _obj = Object.Instantiate(poolObject);
         _obj.transform.SetParent(parentTransform);
         _obj.gameObject.SetActive(true);
