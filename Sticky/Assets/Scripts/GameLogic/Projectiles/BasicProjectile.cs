@@ -50,7 +50,7 @@ public class BasicProjectile : MonoBehaviour
 
 
 
-    void OnCollisionEnter2D(Collision2D col)
+   protected virtual void OnCollisionEnter2D(Collision2D col)
     {
         if (col.transform.tag == "wall")
         {
