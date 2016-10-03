@@ -4,13 +4,13 @@ using System.Collections;
 public class Spark : MonoBehaviour {
 
     public Transform sparkle;
-	public AudioClip bounce;
+	//public AudioClip bounce;
 
 
 	// Use this for initialization
 	void Start () {
 		sparkle.GetComponent<ParticleSystem> ().Stop();
-		GetComponent<AudioSource> ().clip = bounce;	
+		//GetComponent<AudioSource> ().clip = bounce;	
 	}
 	
 	void OnTriggerEnter2D()
@@ -18,7 +18,7 @@ public class Spark : MonoBehaviour {
 
 		sparkle.GetComponent<ParticleSystem> ().Play();
         StartCoroutine(stopSparkles());
-		GetComponent<AudioSource> ().Play ();
+		//GetComponent<AudioSource> ().Play ();
     }
 
     IEnumerator stopSparkles()

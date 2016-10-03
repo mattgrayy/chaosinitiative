@@ -8,6 +8,9 @@ public class Player : Actor {
     public SpriteRenderer shieldSprite;
     public ProjType shieldType;
 
+    public Sprite BasicShield, DamageShield, KnockShield, VoidSheild;
+    public string ShieldTag = "Basic";
+
     void Update()
     {
         switch (playerNumber)
@@ -28,5 +31,50 @@ public class Player : Actor {
 
         //GetComponent<Rigidbody2D>().AddForce(Vector2.right * Input.GetAxis("XAxis" + (playerNumber + 1).ToString()) * movementForce * Time.deltaTime);
 
+        //check for button press
+        if (Input.GetButtonDown("1Button" + (playerNumber + 1).ToString()))
+        {
+            shieldSprite.sprite = BasicShield;
+            ShieldTag = "Basic";
+        }
+
+        if (Input.GetButtonDown("2Button" + (playerNumber + 1).ToString()))
+        {
+            shieldSprite.sprite = DamageShield;
+            ShieldTag = "Damage";
+        }
+
+        if (Input.GetButtonDown("0Button" + (playerNumber + 1).ToString()))
+        {
+            shieldSprite.sprite = KnockShield;
+            ShieldTag = "Knock";
+        }
+
+        if (Input.GetButtonDown("3Button" + (playerNumber + 1).ToString()))
+        {
+            shieldSprite.sprite = VoidSheild;
+            ShieldTag = "Void";
+        }
+
     }
+
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+
+        if (!(col.gameObject.tag == ShieldTag))
+        {
+
+            //kill player
+            gameObject.SetActive(false);
+
+        }
+
+
+    }
+
+
+
+
+
 }

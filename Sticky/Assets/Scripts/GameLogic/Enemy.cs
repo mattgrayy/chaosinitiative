@@ -9,6 +9,7 @@ public class Enemy : Actor
     [SerializeField] private float maxFireRate = 30;
     [SerializeField] private Transform projectspawn;
     private bool isSetup = false;
+    
 
     public static int numActiveEnemies { get; private set; } //total number of active enemies within the scene
     public static void ResetActiveEnemies() { numActiveEnemies = 0; } //function to reset numActiveEnemies if needed
@@ -23,6 +24,7 @@ public class Enemy : Actor
         myTransform = transform;
 
         nextFireTime = Random.Range(minFireRate, maxFireRate);
+        fireTimer = Random.Range(0, nextFireTime);
     }
 
     public void SetupEnemy(Vector3 startPosition)
@@ -76,6 +78,7 @@ public class Enemy : Actor
             gameObject.SetActive(false);
             --numActiveEnemies;
             isSetup = false;
+            DeathAni.Play();
         }
     }
     IEnumerator kill()

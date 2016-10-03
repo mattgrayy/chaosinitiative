@@ -27,14 +27,6 @@ public class BasicProjectile : MonoBehaviour
         myTransform = transform;
     }
 
-    
-    private void Update()
-    {
-      
-       
-   
-    }
-
     private void LateUpdate()
     {
         ridg.velocity = Vector3.ClampMagnitude(ridg.velocity * 10, projectileSpeed);
