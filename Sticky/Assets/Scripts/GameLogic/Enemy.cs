@@ -7,7 +7,7 @@ public class Enemy : Actor
 
     [SerializeField] private float minFireRate = 3;
     [SerializeField] private float maxFireRate = 10;
-
+    [SerializeField] private Transform projectspawn;
     private bool isSetup = false;
 
     public static int numActiveEnemies { get; private set; } //total number of active enemies within the scene
@@ -52,9 +52,17 @@ public class Enemy : Actor
         transform.position += Vector3.down * Time.deltaTime * 0.25f;
         if (fireTimer >= nextFireTime)
         {
-            // Do rays
-            BasicProjectile _proj = GetProjectile();
-            _proj.FireProjectile(myTransform.position, myTransform.rotation);
+            //  rays
+            Vector3 _dir = projectspawn.position - transform.position;
+
+            RaycastHit2D hit = Physics2D.Raycast(projectspawn.position, _dir,1000);
+            if(hit.collider.tag !="enemy")
+            {
+                BasicProjectile _proj = GetProjectile();
+                       _proj.FireProjectile(projectspawn.position, _dir);
+                      
+            }
+        
             nextFireTime = Random.Range(minFireRate, maxFireRate);
             fireTimer = 0;
         }
@@ -70,4 +78,18 @@ public class Enemy : Actor
             isSetup = false;
         }
     }
+    IEnumerator kill()
+    {
+
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame();
+        Death();
+    }
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        StartCoroutine("kill");
+     
+    }
+
+    
 }

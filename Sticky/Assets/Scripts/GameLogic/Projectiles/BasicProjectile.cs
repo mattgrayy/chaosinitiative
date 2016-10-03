@@ -19,7 +19,7 @@ public class BasicProjectile : MonoBehaviour
     void Start()
     {
         ridg = GetComponent<Rigidbody2D>();
-        ridg.AddForce(new Vector2(x, y));
+        
     }
     private void Awake()
     {
@@ -39,10 +39,13 @@ public class BasicProjectile : MonoBehaviour
         ridg.velocity = Vector3.ClampMagnitude(ridg.velocity * 10, projectileSpeed);
     }
 
-    public void FireProjectile(Vector3 _pos, Quaternion _rot)
+    public void FireProjectile(Vector3 _pos, Vector3 _dir)
     {
         myTransform.position = _pos;
-        myTransform.rotation = _rot;
+        
+        ridg.velocity = Vector2.zero;
+
+        ridg.AddForce(new Vector2(_dir.x,_dir.y));
     }
 
     public void DestroyProjectile()

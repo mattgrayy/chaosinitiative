@@ -2,8 +2,7 @@
 using System.Collections;
 
 public class base_shield : MonoBehaviour {
-    [SerializeField]  protected int ricocet = 1;
-    private bool TIMETODIE = false;
+    
 	// Use this for initialization
 	void Start () {
 	
@@ -17,10 +16,7 @@ public class base_shield : MonoBehaviour {
 
     void LateUpdate()
     {
-        if (ricocet < 1)
-        {
-           
-        }
+    
     }
 
     IEnumerator kill()
@@ -34,14 +30,11 @@ public class base_shield : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        TIMETODIE = true;
+        
 
         StartCoroutine("kill");
 
-        if (ricocet>0)
-        {
-            ricocet--;
-        }
+       
       
     }
 
