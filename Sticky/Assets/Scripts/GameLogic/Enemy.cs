@@ -5,8 +5,8 @@ public class Enemy : Actor
 {
     [SerializeField] private ProjType[] projectileTypes = null; //An array of the types of projectile that can be fired
 
-    [SerializeField] private float minFireRate = 3;
-    [SerializeField] private float maxFireRate = 10;
+    [SerializeField] private float minFireRate = 10;
+    [SerializeField] private float maxFireRate = 30;
     [SerializeField] private Transform projectspawn;
     private bool isSetup = false;
 

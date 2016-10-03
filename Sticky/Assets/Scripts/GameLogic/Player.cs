@@ -14,6 +14,7 @@ public class Player : Actor {
         {
             case 0:
                 GetComponent<Rigidbody2D>().AddForce(Vector2.right * Input.GetAxis("XAxis" + (playerNumber + 1).ToString()) * movementForce * Time.deltaTime);
+                //GetComponent<Rigidbody2D>().AddForce(Vector2.right * Input.GetAxis("Mouse X") * movementForce * 100 * Time.deltaTime);
                 break;
             case 1:
                 GetComponent<Rigidbody2D>().AddForce(Vector2.right * Input.GetAxis("3Axis1") * movementForce * Time.deltaTime);

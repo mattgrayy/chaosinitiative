@@ -9,6 +9,7 @@ public class BasicProjectile : MonoBehaviour
 
     [SerializeField] protected bool canBounce = false;
     [SerializeField] protected int bounces = 6;
+    private int baseBounces = 0;
     [SerializeField] protected float projectileSpeed = 5.0f;
     public float x;
     public float y;
@@ -19,7 +20,7 @@ public class BasicProjectile : MonoBehaviour
     void Start()
     {
         ridg = GetComponent<Rigidbody2D>();
-        
+        baseBounces = bounces;
     }
     private void Awake()
     {
@@ -46,27 +47,33 @@ public class BasicProjectile : MonoBehaviour
         ridg.velocity = Vector2.zero;
 
         ridg.AddForce(new Vector2(_dir.x,_dir.y));
+        GetComponent<TrailRenderer>().Clear();
     }
 
     public void DestroyProjectile()
     {
         gameObject.SetActive(false);
+        bounces = baseBounces;
     }
 
 
 
     void OnCollisionEnter2D(Collision2D col)
     {
-
-            if (bounces > 0)
-            {
-                bounces--;
-            }
-            else if (bounces == 0)
-            {
-            DestroyProjectile();
-            }
+        if (col.transform.tag == "wall")
+        {
+            bounces = 0;
         }
+
+        if (bounces > 0)
+        {
+            bounces--;
+        }
+        else if (bounces == 0)
+        {
+            DestroyProjectile();
+        }
+    }
     
 
 }
