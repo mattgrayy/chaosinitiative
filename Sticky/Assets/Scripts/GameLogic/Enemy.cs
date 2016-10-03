@@ -10,6 +10,7 @@ public class Enemy : Actor
     [SerializeField] private Transform projectspawn;
     private bool isSetup = false;
     
+    public static bool globalCanFire { get; set; }
 
     public static int numActiveEnemies { get; private set; } //total number of active enemies within the scene
     public static void ResetActiveEnemies() { numActiveEnemies = 0; } //function to reset numActiveEnemies if needed
@@ -17,14 +18,12 @@ public class Enemy : Actor
     private float nextFireTime = 0;
     private float fireTimer = 0;
 
-    private Transform myTransform = null;
 
-    private void Awake()
+    protected override void Awake()
     {
-        myTransform = transform;
-
+        base.Awake();
         nextFireTime = Random.Range(minFireRate, maxFireRate);
-        fireTimer = Random.Range(0, nextFireTime);
+        fireTimer = Random.Range(0, nextFireTime * 0.5f);
     }
 
     public void SetupEnemy(Vector3 startPosition)
@@ -49,25 +48,38 @@ public class Enemy : Actor
 
     void Update()
     {
-        fireTimer += Time.deltaTime;
+        if (globalCanFire)
+        {
+            fireTimer += Time.deltaTime;
+        }
         //Test Movement
-        transform.position += Vector3.down * Time.deltaTime * 0.25f;
+        //transform.position += Vector3.down * Time.deltaTime * 0.25f;
         if (fireTimer >= nextFireTime)
         {
             //  rays
             Vector3 _dir = projectspawn.position - transform.position;
 
             RaycastHit2D hit = Physics2D.Raycast(projectspawn.position, _dir,1000);
-            if(hit.collider.tag !="enemy")
+            if (hit)
             {
-                BasicProjectile _proj = GetProjectile();
-                       _proj.FireProjectile(projectspawn.position, _dir);
-                      
+                if (hit.collider.tag != "enemy")
+                {
+                    BasicProjectile _proj = GetProjectile();
+                    _proj.FireProjectile(projectspawn.position, _dir);
+                    globalCanFire = false;
+                }
             }
         
             nextFireTime = Random.Range(minFireRate, maxFireRate);
             fireTimer = 0;
         }
+    }
+
+    private void FixedUpdate()
+    {
+        Vector3 _dir = projectspawn.position - transform.position;
+        ridg.AddForce(_dir * movementForce * Time.deltaTime);
+        
     }
 
     public void Death()
@@ -78,7 +90,7 @@ public class Enemy : Actor
             gameObject.SetActive(false);
             --numActiveEnemies;
             isSetup = false;
-            DeathAni.Play();
+            
         }
     }
     IEnumerator kill()
@@ -91,7 +103,11 @@ public class Enemy : Actor
     void OnCollisionEnter2D(Collision2D col)
     {
         StartCoroutine("kill");
-     
+        ParticleEffect _particle = ParticleManager.instance.GetParticle(0);
+        _particle.transform.position = myTransform.position;
+        _particle.Trigger();
+        //DeathAni.Play();
+
     }
 
     

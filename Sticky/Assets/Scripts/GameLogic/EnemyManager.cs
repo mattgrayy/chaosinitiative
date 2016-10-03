@@ -8,6 +8,9 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private Enemy[] enemyPrefabs = null; //Array of different enemy types as prefabs
     private IterativeBehaviourPool<Enemy>[] enemyPools = null; //Array of enemy pools for different enemy types
 
+    [SerializeField] private float enemyFireDelay = 0.25f;
+    private float fireDelayTime = 0;
+
     private void Awake()
     {
         if (instance)
@@ -18,11 +21,25 @@ public class EnemyManager : MonoBehaviour
         {
             instance = this;
             Enemy.ResetActiveEnemies();
+            Enemy.globalCanFire = true;
             //Create enemy pools from prefabs
             enemyPools = new IterativeBehaviourPool<Enemy>[enemyPrefabs.Length];
             for(int i = 0; i < enemyPrefabs.Length; ++i)
             {
                 enemyPools[i] = new IterativeBehaviourPool<Enemy>(enemyPrefabs[i], 5, parentFolder);
+            }
+        }
+    }
+
+    private void Update()
+    {
+        if(!Enemy.globalCanFire)
+        {
+            fireDelayTime += Time.deltaTime;
+            if(fireDelayTime >= enemyFireDelay)
+            {
+                fireDelayTime = 0.0f;
+                Enemy.globalCanFire = true;
             }
         }
     }

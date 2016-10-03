@@ -8,8 +8,8 @@ public class BasicProjectile : MonoBehaviour
     private Transform myTransform = null;
 
     [SerializeField] protected bool canBounce = false;
-    [SerializeField] protected int bounces = 6;
-    private int baseBounces = 0;
+    [SerializeField] protected int bounces = 2;
+    private int currentBounces = 2;
     [SerializeField] protected float projectileSpeed = 5.0f;
     public float x;
     public float y;
@@ -20,7 +20,7 @@ public class BasicProjectile : MonoBehaviour
     void Start()
     {
         ridg = GetComponent<Rigidbody2D>();
-        baseBounces = bounces;
+        
     }
     private void Awake()
     {
@@ -37,7 +37,7 @@ public class BasicProjectile : MonoBehaviour
         myTransform.position = _pos;
         
         ridg.velocity = Vector2.zero;
-
+        currentBounces = bounces;
         ridg.AddForce(new Vector2(_dir.x,_dir.y));
         GetComponent<TrailRenderer>().Clear();
     }
@@ -45,29 +45,34 @@ public class BasicProjectile : MonoBehaviour
     public void DestroyProjectile()
     {
         gameObject.SetActive(false);
-        bounces = baseBounces;
     }
 
 
 
    protected virtual void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.transform.tag == "wall")
+        if (col.transform.tag == "Shield")
         {
-            bounces = 0;
+            currentBounces = 0;
         }
-
-        if (bounces > 0)
+        if (currentBounces == 0)
         {
-            bounces--;
+            if (col.gameObject.tag == "Player" || col.gameObject.tag == "enemy" || col.gameObject.tag == "Shield")
+            {
+                DestroyProjectile();
+            }
         }
-        else if (bounces == 0)
+        else
         {
-            DestroyProjectile();
+            if (currentBounces > 0)
+            {
+                if (col.gameObject.tag == "Player" || col.gameObject.tag == "enemy")
+                {
+                    currentBounces--;
+                }
+            }
         }
     }
-    
-
 }
 
 
