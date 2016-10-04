@@ -38,6 +38,7 @@ public class LevelManager : MonoBehaviour
         if (currentLevel != levels.Length)
         {
             hasLevelBegun = true;
+            Enemy.globalCanFire = false;
         }
         //Finished all levels
         else
