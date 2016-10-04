@@ -9,7 +9,8 @@ public class EnemyManager : MonoBehaviour
     private IterativeBehaviourPool<Enemy>[] enemyPools = null; //Array of enemy pools for different enemy types
 
     [SerializeField] private float enemyFireDelay = 0.25f;
-    private float fireDelayTime = 0.0f;
+    private float fireDelayTime = 0;
+    public int totalEnemiesKilled = 0;
 
     private void Awake()
     {
@@ -21,7 +22,7 @@ public class EnemyManager : MonoBehaviour
         {
             instance = this;
             Enemy.ResetActiveEnemies();
-            Enemy.globalCanFire = false;
+            Enemy.globalCanFire = true;
             //Create enemy pools from prefabs
             enemyPools = new IterativeBehaviourPool<Enemy>[enemyPrefabs.Length];
             for(int i = 0; i < enemyPrefabs.Length; ++i)

@@ -5,18 +5,21 @@ public class gameover : MonoBehaviour {
     private float waittime = 0.0f;
     [SerializeField] private float delay = 20f;
     private float alphaval = 0;
-    private bool GO = false;
+    public bool GO = false;
     [SerializeField]private SpriteRenderer GOblackout;
- 
 
-	// Use this for initialization
-	void Start () {
+    [SerializeField] private outcome outcme;
+
+
+    // Use this for initialization
+    void Start () {
         
        // GOblackout.material.color = Color.clear;
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
         GameOver();
 	}
 
@@ -36,6 +39,7 @@ public class gameover : MonoBehaviour {
             
             if (waittime >= delay)
             {
+                outcme.getEnemyKillCount();
                 Application.LoadLevel(2);
                 if (alphaval < 1)
                 {
