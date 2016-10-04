@@ -26,6 +26,8 @@ public class GlobalSoundManager : MonoBehaviour
     private float musicVolume = 1.0f;
     private float effectsVolume = 1.0f;
 
+    [SerializeField] private AudioClip[] sounds = null;
+
     private void Awake()
     {
         if (soundManager)
@@ -90,6 +92,14 @@ public class GlobalSoundManager : MonoBehaviour
         AudioObject _audio = _generalSound ? audioGeneralEffectsPool.GetPooledObject() : audioGameplayEffectsPool.GetPooledObject();
         _audio.transform.position = _pos;
         _audio.PlayEffect(_clip, _volume, _pitch, _loop);
+        return _audio;
+    }
+
+    public AudioObject PlaySoundEffect(int _id, Vector3 _pos, float _volume = 1.0f, float _pitch = 1.0f, bool _loop = false, bool _generalSound = false)
+    {
+        AudioObject _audio = _generalSound ? audioGeneralEffectsPool.GetPooledObject() : audioGameplayEffectsPool.GetPooledObject();
+        _audio.transform.position = _pos;
+        _audio.PlayEffect(sounds[_id], _volume, _pitch, _loop);
         return _audio;
     }
 

@@ -51,6 +51,7 @@ public class BasicProjectile : MonoBehaviour
     {
         if (!isDying)
         {
+            GlobalSoundManager.instance.PlaySoundEffect(Random.Range(5, 11), Vector3.zero, 0.15f);
             if (currentBounces > 0)
             {
                 if (col.gameObject.tag == "enemy")

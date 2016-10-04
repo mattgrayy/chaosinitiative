@@ -115,6 +115,7 @@ public class Enemy : Actor
         ParticleEffect _particle = ParticleManager.instance.GetParticle(0);
         _particle.transform.position = myTransform.position;
         _particle.Trigger();
+        GlobalSoundManager.instance.PlaySoundEffect(Random.Range(0, 5), Vector3.zero, 0.25f);
     }
 
     protected virtual void OnCollisionEnter2D(Collision2D col)
