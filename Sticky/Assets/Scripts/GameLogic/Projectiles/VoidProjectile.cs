@@ -3,13 +3,30 @@ using System.Collections;
 
 public class VoidProjectile : BasicProjectile
 {
-    [SerializeField] private float radius=5;
-
     protected override void OnCollisionEnter2D(Collision2D col)
     {
-        base.OnCollisionEnter2D(col);
-
-        //RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, radius, Vector2.zero)  ;
+        if (currentBounces > 0)
+        {
+            if (col.gameObject.tag == "enemy")
+            {
+                currentBounces--;
+            }
+        }
+        if (col.transform.tag == "Shield")
+        {
+            currentBounces = 0;
+        }
+        if (currentBounces == 0)
+        {
+            if (col.gameObject.tag == "enemy")
+            {
+                VoidSuctionManager.instance.GetPooledVoidSuction().StartSuction(transform.position);
+                DestroyProjectile();
+            }
+            else if(col.gameObject.tag == "Shield")
+            {
+                DestroyProjectile();
+            }
+        }
     }
-
 }

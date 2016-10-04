@@ -9,7 +9,7 @@ public class BasicProjectile : MonoBehaviour
 
     [SerializeField] protected bool canBounce = false;
     [SerializeField] protected int bounces = 2;
-    private int currentBounces = 2;
+    protected int currentBounces = 2;
     [SerializeField] protected float projectileSpeed = 5.0f;
     public float x;
     public float y;
@@ -51,25 +51,22 @@ public class BasicProjectile : MonoBehaviour
 
    protected virtual void OnCollisionEnter2D(Collision2D col)
     {
+        if (currentBounces > 0)
+        {
+            if (col.gameObject.tag == "enemy")
+            {
+                currentBounces--;
+            }
+        }
         if (col.transform.tag == "Shield")
         {
             currentBounces = 0;
         }
         if (currentBounces == 0)
         {
-            if (col.gameObject.tag == "Player" || col.gameObject.tag == "enemy" || col.gameObject.tag == "Shield")
+            if (col.gameObject.tag == "enemy" || col.gameObject.tag == "Shield")
             {
                 DestroyProjectile();
-            }
-        }
-        else
-        {
-            if (currentBounces > 0)
-            {
-                if (col.gameObject.tag == "Player" || col.gameObject.tag == "enemy")
-                {
-                    currentBounces--;
-                }
             }
         }
     }

@@ -102,11 +102,14 @@ public class Enemy : Actor
     }
     void OnCollisionEnter2D(Collision2D col)
     {
-        StartCoroutine("kill");
-        ParticleEffect _particle = ParticleManager.instance.GetParticle(0);
-        _particle.transform.position = myTransform.position;
-        _particle.Trigger();
-        //DeathAni.Play();
+        if (col.gameObject.tag != "enemy")
+        {
+            StartCoroutine("kill");
+            ParticleEffect _particle = ParticleManager.instance.GetParticle(0);
+            _particle.transform.position = myTransform.position;
+            _particle.Trigger();
+            //DeathAni.Play();
+        }
 
     }
 
