@@ -58,11 +58,11 @@ public class Enemy : Actor
         }
         //Test Movement
         //transform.position += Vector3.down * Time.deltaTime * 0.25f;
+        
         if (fireTimer >= nextFireTime)
         {
             //  rays
             Vector3 _dir = projectspawn.position - transform.position;
-
             RaycastHit2D hit = Physics2D.Raycast(projectspawn.position, _dir, 1000);
             if (hit)
             {
@@ -79,6 +79,7 @@ public class Enemy : Actor
             nextFireTime = Random.Range(minFireRate, maxFireRate);
             fireTimer = 0;
         }
+        myTransform.rotation = Quaternion.Lerp(myTransform.rotation, Quaternion.LookRotation(Vector3.forward, Vector3.up), Time.deltaTime * 0.5f);
     }
 
     private void FixedUpdate()
