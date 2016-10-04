@@ -61,21 +61,23 @@ public class Enemy : Actor
         
         if (fireTimer >= nextFireTime)
         {
-            //  rays
-            Vector3 _dir = projectspawn.position - transform.position;
-            RaycastHit2D hit = Physics2D.Raycast(projectspawn.position, _dir, 1000);
-            if (hit)
+            if (Camera.main.WorldToViewportPoint(myTransform.position).y < 1.0f)
             {
-                if (hit.collider.tag != "enemy")
+                //  rays
+                Vector3 _dir = projectspawn.position - transform.position;
+                RaycastHit2D hit = Physics2D.Raycast(projectspawn.position, _dir, 1000);
+                if (hit)
                 {
-                    BasicProjectile _proj = GetProjectile();
-                    _proj.FireProjectile(projectspawn.position, _dir);
-                    //play shoot sound
-                    Shoot.Play();
-                    globalCanFire = false;
+                    if (hit.collider.tag != "enemy")
+                    {
+                        BasicProjectile _proj = GetProjectile();
+                        _proj.FireProjectile(projectspawn.position, _dir);
+                        //play shoot sound
+                        Shoot.Play();
+                        globalCanFire = false;
+                    }
                 }
             }
-
             nextFireTime = Random.Range(minFireRate, maxFireRate);
             fireTimer = 0;
         }

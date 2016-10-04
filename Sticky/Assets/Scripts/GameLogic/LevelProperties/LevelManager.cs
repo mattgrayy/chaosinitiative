@@ -95,7 +95,10 @@ public class LevelManager : MonoBehaviour
         //Spawn each enemy using an enemy id and location id
         foreach(WaveEnemyData waveEnemy in levels[currentLevel].waves[currentWave].enemyData)
         {
-            EnemyManager.instance.GetPooledEnemy(waveEnemy.enemyID).SetupEnemy(new Vector3(_x * (waveEnemy.locationID - 10), _pos.y, 0.0f));
+            if (!waveEnemy.overrideDelete)
+            {
+                EnemyManager.instance.GetPooledEnemy(waveEnemy.enemyID).SetupEnemy(new Vector3(_x * (waveEnemy.locationID - 10), _pos.y, 0.0f));
+            }
         }
     }
 }

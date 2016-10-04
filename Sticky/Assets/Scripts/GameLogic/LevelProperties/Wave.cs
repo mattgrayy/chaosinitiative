@@ -5,5 +5,5 @@
 public struct Wave
 {
     public WaveEnemyData[] enemyData;
-    [Range(1.0f, 5.0f)] public float nextWaveTime;
+    [Range(1.0f, 25.0f)] public float nextWaveTime;
 }
