@@ -13,6 +13,8 @@ public class outcome : MonoBehaviour {
     Text killText;
     Text timeText;
 
+    bool takenInfo = false;
+
     void Start()
     {
         DontDestroyOnLoad(transform.gameObject);
@@ -28,14 +30,22 @@ public class outcome : MonoBehaviour {
 
     public void getEnemyKillCount()
     {
-        enemyKillCount = EnemyManager.instance.totalEnemiesKilled;
-        gameEnded = true;
+        if (!takenInfo)
+        {
+            enemyKillCount = EnemyManager.instance.totalEnemiesKilled;
+            gameEnded = true;
+            takenInfo = true;
+        }
     }
 
     public void weWon()
     {
-        win = true;
-        getEnemyKillCount();
+        if (!takenInfo)
+        {
+            win = true;
+            getEnemyKillCount();
+            takenInfo = true;
+        }
     }
 
     public void connectTargets(Text _tarText, Text _killText, Text _timeText)

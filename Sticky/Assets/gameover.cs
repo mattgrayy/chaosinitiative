@@ -34,17 +34,12 @@ public class gameover : MonoBehaviour {
         if(GO)
         {
             waittime += Time.deltaTime;
-            print(waittime / delay);
             GOblackout.color = new Color(0, 0, 0, waittime/delay);
-            
             if (waittime >= delay)
             {
-                outcme.getEnemyKillCount();
                 Application.LoadLevel(2);
                 if (alphaval < 1)
                 {
-                    
-
                     alphaval += 0.01f;
                 }
 
@@ -58,6 +53,7 @@ public class gameover : MonoBehaviour {
     }
     IEnumerator DeathAnimation()
     {
+        outcme.getEnemyKillCount();
         ParticleEffect _par = ParticleManager.instance.GetParticle(0);
         _par = ParticleManager.instance.GetParticle(0);
         _par.transform.position = new Vector3(-7.0f, -4.0f, 0.0f);
