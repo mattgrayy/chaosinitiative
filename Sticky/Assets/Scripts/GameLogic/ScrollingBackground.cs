@@ -4,6 +4,6 @@ using System.Collections;
 [System.Serializable]
 public class ScrollingBackground
 {
-    public Sprite sprite = null;
+    public Transform trans = null;
     public float movementSpeed = 1.0f;
 }
