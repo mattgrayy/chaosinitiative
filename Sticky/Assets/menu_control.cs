@@ -9,8 +9,12 @@ public class menu_control : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-
+	void Update ()
+    {
+        if(Input.GetKeyDown(KeyCode.L))
+        {
+            Player.playerShare = !Player.playerShare;
+        }
 
 	if(Input.GetButtonDown("0Button1"))
         {
