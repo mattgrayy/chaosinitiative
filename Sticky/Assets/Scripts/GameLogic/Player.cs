@@ -20,6 +20,7 @@ public class Player : Actor {
     [SerializeField] private float respawnTime = 0.0f;
     private bool isRespawning = false;
 
+    [SerializeField] private ParticleSystem parSystem = null;
     protected override void Awake()
     {
         base.Awake();
@@ -35,6 +36,7 @@ public class Player : Actor {
             {
                 isRespawning = false;
                 circleCollider.enabled = true;
+                parSystem.Play();
                 foreach (SpriteRenderer spriteRenderer in spriteRenderers)
                 {
                     spriteRenderer.enabled = true;
@@ -79,24 +81,32 @@ public class Player : Actor {
         {
             shieldSprite.sprite = BasicShield;
             ShieldTag = "Basic";
+            parSystem.Clear();
+            parSystem.startColor = Color.blue;
         }
 
         if (Input.GetButtonDown("2Button" + (playerNumber + 1).ToString()))
         {
             shieldSprite.sprite = DamageShield;
             ShieldTag = "Damage";
+            parSystem.Clear();
+            parSystem.startColor = Color.red;
         }
 
         if (Input.GetButtonDown("0Button" + (playerNumber + 1).ToString()))
         {
             shieldSprite.sprite = KnockShield;
             ShieldTag = "Knock";
+            parSystem.Clear();
+            parSystem.startColor = Color.magenta;
         }
 
         if (Input.GetButtonDown("3Button" + (playerNumber + 1).ToString()))
         {
             shieldSprite.sprite = VoidSheild;
             ShieldTag = "Void";
+            parSystem.Clear();
+            parSystem.startColor = Color.green;
         }       
     }
 
@@ -132,6 +142,8 @@ public class Player : Actor {
         isRespawning = true;
         respawnTime = 0.0f;
         respawnFlickerTime = 0.0f;
+        parSystem.Clear();
+        parSystem.Stop();
         circleCollider.enabled = false;
     }
 
