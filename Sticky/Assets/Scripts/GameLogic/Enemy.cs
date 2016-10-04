@@ -17,7 +17,7 @@ public class Enemy : Actor
 
     private float nextFireTime = 0;
     private float fireTimer = 0;
-
+    public AudioSource Shoot;
 
     protected override void Awake()
     {
@@ -66,6 +66,8 @@ public class Enemy : Actor
                 {
                     BasicProjectile _proj = GetProjectile();
                     _proj.FireProjectile(projectspawn.position, _dir);
+                    //play shoot sound
+                    Shoot.Play();
                     globalCanFire = false;
                 }
             }
@@ -108,7 +110,8 @@ public class Enemy : Actor
             ParticleEffect _particle = ParticleManager.instance.GetParticle(0);
             _particle.transform.position = myTransform.position;
             _particle.Trigger();
-            //DeathAni.Play();
+            
+            
         }
 
     }
