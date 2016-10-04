@@ -16,6 +16,10 @@ public class LevelManager : MonoBehaviour
 
     private bool hasLevelBegun = false;
 
+    [SerializeField] private outcome outcme;
+
+    public bool Winners = false;
+
     private void Awake()
     {
         if (instance)
@@ -38,7 +42,9 @@ public class LevelManager : MonoBehaviour
         //Finished all levels
         else
         {
-            
+            outcme.weWon();
+            Winners = true;
+            Application.LoadLevel(2);
         }
     }
 

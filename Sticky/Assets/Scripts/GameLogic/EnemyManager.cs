@@ -10,6 +10,7 @@ public class EnemyManager : MonoBehaviour
 
     [SerializeField] private float enemyFireDelay = 0.25f;
     private float fireDelayTime = 0;
+    public int totalEnemiesKilled = 0;
 
     private void Awake()
     {
