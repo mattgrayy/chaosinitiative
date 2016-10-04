@@ -65,7 +65,7 @@ public class Enemy : Actor
                 if (hit.collider.tag != "enemy")
                 {
                     BasicProjectile _proj = GetProjectile();
-                    _proj.FireProjectile(projectspawn.position, _dir);
+                    _proj.FireProjectile(projectspawn.position, _dir, this);
                     //play shoot sound
                     Shoot.Play();
                     globalCanFire = false;
@@ -97,21 +97,22 @@ public class Enemy : Actor
     }
     IEnumerator kill()
     {
-
         yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
         Death();
     }
+
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.tag != "enemy")
         {
-            StartCoroutine("kill");
-            ParticleEffect _particle = ParticleManager.instance.GetParticle(0);
-            _particle.transform.position = myTransform.position;
-            _particle.Trigger();
-            
-            
+            if (col.gameObject.tag != "Knock")
+            {
+                StartCoroutine("kill");
+                ParticleEffect _particle = ParticleManager.instance.GetParticle(0);
+                _particle.transform.position = myTransform.position;
+                _particle.Trigger();
+            }  
         }
 
     }

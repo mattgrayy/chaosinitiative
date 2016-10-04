@@ -3,11 +3,8 @@ using System.Collections;
 
 public class BasicProjectile : MonoBehaviour
 {
-    private bool lethal = true;
-   
     private Transform myTransform = null;
 
-    [SerializeField] protected bool canBounce = false;
     [SerializeField] protected int bounces = 2;
     protected int currentBounces = 2;
     [SerializeField] protected float projectileSpeed = 5.0f;
@@ -15,6 +12,7 @@ public class BasicProjectile : MonoBehaviour
     public float y;
     [SerializeField] protected Rigidbody2D ridg;
     public GameObject ball;
+    protected Enemy enemySpawnedFrom = null;
 
 
     void Start()
@@ -32,10 +30,10 @@ public class BasicProjectile : MonoBehaviour
         ridg.velocity = Vector3.ClampMagnitude(ridg.velocity * 10, projectileSpeed);
     }
 
-    public void FireProjectile(Vector3 _pos, Vector3 _dir)
+    public void FireProjectile(Vector3 _pos, Vector3 _dir, Enemy _enemy)
     {
         myTransform.position = _pos;
-        
+        enemySpawnedFrom = _enemy;
         ridg.velocity = Vector2.zero;
         currentBounces = bounces;
         ridg.AddForce(new Vector2(_dir.x,_dir.y));
