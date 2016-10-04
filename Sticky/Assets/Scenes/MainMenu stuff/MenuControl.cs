@@ -40,7 +40,7 @@ public class MenuControl : MonoBehaviour {
         if (Input.GetButtonDown("1Button1"))
         {
             //play
-            Application.LoadLevel(0);
+            Application.LoadLevel(1);
         }
 
         if (Input.GetButtonDown("2Button1"))

@@ -19,7 +19,7 @@ public class VoidSuction : MonoBehaviour
         ParticleEffect _par = ParticleManager.instance.GetParticle(1);
         _par.transform.position = _pos;
         CameraShake.instance.ShakeCamera(3.0f, 0.1f);
-        GlobalSoundManager.instance.PlaySoundEffect(Random.Range(11, 13), Vector3.zero, 0.45f);
+        GlobalSoundManager.instance.PlaySoundEffect(Random.Range(11, 13), Vector3.zero, 0.8f);
     }
 
     private void Update()

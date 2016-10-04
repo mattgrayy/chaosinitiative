@@ -66,7 +66,7 @@ public class outcome : MonoBehaviour {
         }
 
         killText.text = "Total Kills: " + enemyKillCount.ToString();
-        timeText.text = "Time Played: " + ((int)gameTime).ToString();
+        timeText.text = "Time Played: " + ((int)gameTime).ToString() + " Seconds";
 
         Destroy(gameObject);
     }

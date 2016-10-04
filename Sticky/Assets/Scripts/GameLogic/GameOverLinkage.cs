@@ -26,7 +26,7 @@ public class GameOverLinkage : MonoBehaviour {
         }
         else
         {
-            Application.LoadLevel(1);
+            Application.LoadLevel(0);
         }
     }
 }

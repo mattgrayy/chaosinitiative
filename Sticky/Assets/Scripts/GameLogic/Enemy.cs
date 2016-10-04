@@ -112,7 +112,10 @@ public class Enemy : Actor
     public void HitByMurderousProjectile()
     {
         StartCoroutine("kill");
+        ++EnemyManager.instance.totalEnemiesKilled;
         ParticleEffect _particle = ParticleManager.instance.GetParticle(0);
+        CameraShake2.instance.ShakeCamera(0.1f, 0.05f);
+
         _particle.transform.position = myTransform.position;
         _particle.Trigger();
         GlobalSoundManager.instance.PlaySoundEffect(Random.Range(0, 5), Vector3.zero, 0.25f);

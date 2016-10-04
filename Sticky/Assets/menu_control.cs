@@ -14,15 +14,15 @@ public class menu_control : MonoBehaviour {
 
 	if(Input.GetButtonDown("0Button1"))
         {
-            Application.LoadLevel(0);
+            Application.LoadLevel(1);
         }
         if (Input.GetButtonDown("0Button3"))
         {
             Application.Quit();
         }
-        if (Input.GetButtonDown(" 1Button1"))
+        if (Input.GetButtonDown("1Button1"))
         {
-            Application.LoadLevel(0);
+            Application.LoadLevel(1);
         }
         if (Input.GetButtonDown("1Button3"))
         {
@@ -30,7 +30,7 @@ public class menu_control : MonoBehaviour {
         }
         if (Input.GetButtonDown( "2Button1"))
         {
-            Application.LoadLevel(0);
+            Application.LoadLevel(1);
         }
         if (Input.GetButtonDown("2Button3"))
         {
