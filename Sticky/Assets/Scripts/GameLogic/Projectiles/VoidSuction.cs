@@ -16,6 +16,9 @@ public class VoidSuction : MonoBehaviour
     {
         transform.position = _pos;
         suctionTime = 0.0f;
+        ParticleEffect par = ParticleManager.instance.GetParticle(1);
+        par.transform.position = _pos;
+        par.Trigger();
     }
 
     private void Update()
