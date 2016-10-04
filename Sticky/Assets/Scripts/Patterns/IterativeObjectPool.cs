@@ -1,6 +1,11 @@
-﻿using UnityEngine;
+﻿/// <summary>
+/// Developed by Shaun
+/// </summary>
+
+using UnityEngine;
 using System.Collections.Generic;
 
+/// <typeparam name="T"></typeparam>
 //Base class for an iterative object pool
 public abstract class IterativeObjectPool<T> where T : Object
 {
