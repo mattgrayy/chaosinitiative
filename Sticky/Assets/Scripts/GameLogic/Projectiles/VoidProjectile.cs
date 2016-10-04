@@ -9,6 +9,7 @@ public class VoidProjectile : BasicProjectile
         {
             if (col.gameObject.tag == "enemy")
             {
+                col.gameObject.GetComponent<Enemy>().HitByMurderousProjectile();
                 currentBounces--;
             }
         }

@@ -3,13 +3,17 @@ using System.Collections;
 
 public class Enemy : Actor
 {
-    [SerializeField] private ProjType[] projectileTypes = null; //An array of the types of projectile that can be fired
+    [SerializeField]
+    private ProjType[] projectileTypes = null; //An array of the types of projectile that can be fired
 
-    [SerializeField] private float minFireRate = 10;
-    [SerializeField] private float maxFireRate = 30;
-    [SerializeField] private Transform projectspawn;
+    [SerializeField]
+    private float minFireRate = 10;
+    [SerializeField]
+    private float maxFireRate = 30;
+    [SerializeField]
+    private Transform projectspawn;
     private bool isSetup = false;
-    
+
     public static bool globalCanFire { get; set; }
 
     public static int numActiveEnemies { get; private set; } //total number of active enemies within the scene
@@ -22,8 +26,6 @@ public class Enemy : Actor
     protected override void Awake()
     {
         base.Awake();
-        nextFireTime = Random.Range(minFireRate, maxFireRate);
-        fireTimer = Random.Range(0, nextFireTime * 0.5f);
     }
 
     public void SetupEnemy(Vector3 startPosition)
@@ -35,8 +37,10 @@ public class Enemy : Actor
             myTransform.rotation = Quaternion.identity;
             ++numActiveEnemies;
             isSetup = true;
+            nextFireTime = Random.Range(minFireRate, maxFireRate);
+            fireTimer = -2.5f;
         }
-        
+
     }
 
     public BasicProjectile GetProjectile()
@@ -59,19 +63,19 @@ public class Enemy : Actor
             //  rays
             Vector3 _dir = projectspawn.position - transform.position;
 
-            RaycastHit2D hit = Physics2D.Raycast(projectspawn.position, _dir,1000);
+            RaycastHit2D hit = Physics2D.Raycast(projectspawn.position, _dir, 1000);
             if (hit)
             {
                 if (hit.collider.tag != "enemy")
                 {
                     BasicProjectile _proj = GetProjectile();
-                    _proj.FireProjectile(projectspawn.position, _dir, this);
+                    _proj.FireProjectile(projectspawn.position, _dir);
                     //play shoot sound
                     Shoot.Play();
                     globalCanFire = false;
                 }
             }
-        
+
             nextFireTime = Random.Range(minFireRate, maxFireRate);
             fireTimer = 0;
         }
@@ -81,7 +85,7 @@ public class Enemy : Actor
     {
         Vector3 _dir = projectspawn.position - transform.position;
         ridg.AddForce(_dir * movementForce * Time.deltaTime);
-        
+
     }
 
     public void Death()
@@ -92,7 +96,7 @@ public class Enemy : Actor
             gameObject.SetActive(false);
             --numActiveEnemies;
             isSetup = false;
-            
+
         }
     }
     IEnumerator kill()
@@ -102,20 +106,23 @@ public class Enemy : Actor
         Death();
     }
 
-    void OnCollisionEnter2D(Collision2D col)
+    public void HitByMurderousProjectile()
     {
-        if (col.gameObject.tag != "enemy")
-        {
-            if (col.gameObject.tag != "Knock")
-            {
-                StartCoroutine("kill");
-                ParticleEffect _particle = ParticleManager.instance.GetParticle(0);
-                _particle.transform.position = myTransform.position;
-                _particle.Trigger();
-            }  
-        }
-
+        StartCoroutine("kill");
+        ParticleEffect _particle = ParticleManager.instance.GetParticle(0);
+        _particle.transform.position = myTransform.position;
+        _particle.Trigger();
     }
 
-    
+    protected virtual void OnCollisionEnter2D(Collision2D col)
+    {
+        if(col.gameObject.tag == "Player")
+        {
+            HitByMurderousProjectile();
+        }
+        else if(col.gameObject.tag == "Shield")
+        {
+            HitByMurderousProjectile();
+        }
+    }
 }
