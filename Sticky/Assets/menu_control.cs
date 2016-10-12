@@ -11,7 +11,7 @@ public class menu_control : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if(Input.GetKeyDown(KeyCode.L))
+        if(Input.GetButtonDown("3Button1"))
         {
             Player.playerShare = !Player.playerShare;
         }

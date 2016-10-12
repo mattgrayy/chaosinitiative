@@ -112,7 +112,7 @@ public class Player : Actor {
         if (!playerShare)
         {
             //check for button press
-            if (Input.GetButtonDown("1Button" + (playerNumber + 1).ToString()))
+            if (Input.GetButtonDown("0Button" + (playerNumber + 1).ToString()))
             {
                 shieldSprite.sprite = BasicShield;
                 ShieldTag = "Basic";
@@ -120,7 +120,7 @@ public class Player : Actor {
                 parSystem.startColor = Color.blue;
             }
 
-            if (Input.GetButtonDown("2Button" + (playerNumber + 1).ToString()))
+            if (Input.GetButtonDown("1Button" + (playerNumber + 1).ToString()))
             {
                 shieldSprite.sprite = DamageShield;
                 ShieldTag = "Damage";
@@ -128,7 +128,7 @@ public class Player : Actor {
                 parSystem.startColor = Color.red;
             }
 
-            if (Input.GetButtonDown("0Button" + (playerNumber + 1).ToString()))
+            if (Input.GetButtonDown("2Button" + (playerNumber + 1).ToString()))
             {
                 shieldSprite.sprite = KnockShield;
                 ShieldTag = "Knock";
