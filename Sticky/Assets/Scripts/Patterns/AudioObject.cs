@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/***********************************************************************************
+ * AudioObject.cs
+ * Generic audio object from Generic Framework Project developed by Shaun Landy 
+***********************************************************************************/
+
+using UnityEngine;
 
 public enum FadeOutResult
 {
@@ -8,6 +13,9 @@ public enum FadeOutResult
     COUNT
 }
 
+/// <summary>
+/// A custom audio object script that holds the functionality to cooperate with the sound manager
+/// </summary>
 public class AudioObject : MonoBehaviour
 {
     [SerializeField] private AudioSource audioSource = null;
@@ -28,6 +36,13 @@ public class AudioObject : MonoBehaviour
 
     public bool isPlaying { get { return audioSource.isPlaying; } }
 
+    /// <summary>
+    /// Called from the sound manager to play sound effect
+    /// </summary>
+    /// <param name="_clip">Audio clip to play</param>
+    /// <param name="_volume">Volume of the clip</param>
+    /// <param name="_pitch">Speed of the clip</param>
+    /// <param name="_loop">Whether the audio should loop</param>
     public void PlayEffect(AudioClip _clip, float _volume = 1.0f, float _pitch = 1.0f, bool _loop = false)
     {
         gameObject.SetActive(true);
@@ -41,6 +56,12 @@ public class AudioObject : MonoBehaviour
         UpdateVolume(GlobalSoundManager.instance.GetVolume(audioType));
     }
 
+    /// <summary>
+    /// Called from the sound manager to play music
+    /// </summary>
+    /// <param name="_playlist">A playlist of music to switch between</param>
+    /// <param name="_volume">Volume of the music</param>
+    /// <param name="_pitch">Speed of the music</param>
     public void PlayMusic(AudioClip[] _playlist, float _volume = 1.0f, float _pitch = 1.0f)
     {
         gameObject.SetActive(true);
@@ -128,11 +149,20 @@ public class AudioObject : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Updates volume from the sound manager
+    /// </summary>
+    /// <param name="_volMod"></param>
     public void UpdateVolume(float _volMod)
     {
         audioSource.volume = defaultVolume * _volMod;
     }
 
+    /// <summary>
+    /// Called from sound manager to pause audio
+    /// </summary>
+    /// <param name="_fadeOut">Whether the music should fade out</param>
+    /// <param name="_fadeDuration">The duration to fade out</param>
     public void Pause(bool _fadeOut = false, float _fadeDuration = 0.5f)
     {
         isFading = false;
@@ -147,6 +177,11 @@ public class AudioObject : MonoBehaviour
         isPaused = true;
     }
 
+    /// <summary>
+    /// Called from sound manager to resume audio
+    /// </summary>
+    /// <param name="_fadeIn">Whether the music should fade in</param>
+    /// <param name="_fadeDuration">The duration to fade in</param>
     public void Resume(bool _fadeIn = false, float _fadeDuration = 0.5f)
     {
         audioSource.UnPause();
@@ -158,6 +193,9 @@ public class AudioObject : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Stops and turns off an audio object
+    /// </summary>
     public void Stop()
     {
         audioSource.Stop();

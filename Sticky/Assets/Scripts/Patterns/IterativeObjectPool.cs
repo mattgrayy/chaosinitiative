@@ -1,12 +1,15 @@
-﻿/// <summary>
-/// Developed by Shaun
-/// </summary>
+﻿/***********************************************************************************
+ * IterativeObjectPool.cs
+ * Generic template iterative object pools from Generic Framework Project developed by Shaun Landy 
+***********************************************************************************/
 
 using UnityEngine;
 using System.Collections.Generic;
 
+/// <summary>
+/// Base object pool, can not be used
+/// </summary>
 /// <typeparam name="T"></typeparam>
-//Base class for an iterative object pool
 public abstract class IterativeObjectPool<T> where T : Object
 {
     protected List<T> pooledObjects = new List<T>();
@@ -21,7 +24,9 @@ public abstract class IterativeObjectPool<T> where T : Object
     public abstract T GetPooledObject();
 }
 
-//Iterative object pool for GameObjects
+/// <summary>
+/// Object pool for GameObjects, use when there is no specific script of the base GameObject to pool
+/// </summary>
 public class IterativeGameObjectPool : IterativeObjectPool<GameObject>
 {
     public IterativeGameObjectPool(GameObject _poolObject, int _startSize = 0, Transform _parent = null)
@@ -29,7 +34,12 @@ public class IterativeGameObjectPool : IterativeObjectPool<GameObject>
         InitialisePool(_poolObject, _startSize, _parent);
     }
 
-    //Sets up pool
+   /// <summary>
+   /// Createds the pool from a prefab
+   /// </summary>
+   /// <param name="_poolObject">Prefab object to pool</param>
+   /// <param name="_startSize">A default starting size</param>
+   /// <param name="_parent">An optional parent transform to make the hierarchy neater</param>
     protected override void InitialisePool(GameObject _poolObject, int _startSize, Transform _parent = null)
     {
         poolIndex = 0;
@@ -45,6 +55,10 @@ public class IterativeGameObjectPool : IterativeObjectPool<GameObject>
         }
     }
 
+    /// <summary>
+    /// Gets a pooled object
+    /// </summary>
+    /// <returns>Pooled GameObject set to active</returns>
     public override GameObject GetPooledObject()
     {
         for (int i = 0; i < pooledObjects.Count; ++i)
@@ -74,7 +88,9 @@ public class IterativeGameObjectPool : IterativeObjectPool<GameObject>
     }
 }
 
-//Iterative object pool for referencing a script directly on a GameObject
+/// <summary>
+/// Object pool for Behaviours/MonoBehaviours, use in most cases 
+/// </summary>
 public class IterativeBehaviourPool<T> : IterativeObjectPool<T> where T : Behaviour
 {
     public IterativeBehaviourPool(T _poolObject, int _startSize = 0, Transform _parent = null)
@@ -82,7 +98,12 @@ public class IterativeBehaviourPool<T> : IterativeObjectPool<T> where T : Behavi
         InitialisePool(_poolObject, _startSize, _parent);
     }
 
-    //Sets up pool
+    /// <summary>
+    /// Createds the pool from a prefab
+    /// </summary>
+    /// <param name="_poolObject">Prefab object to pool</param>
+    /// <param name="_startSize">A default starting size</param>
+    /// <param name="_parent">An optional parent transform to make the hierarchy neater</param>
     protected override void InitialisePool(T _poolObject, int _startSize, Transform _parent = null)
     {
         poolIndex = 0;
@@ -98,6 +119,10 @@ public class IterativeBehaviourPool<T> : IterativeObjectPool<T> where T : Behavi
         }
     }
 
+    /// <summary>
+    /// Gets a pooled object
+    /// </summary>
+    /// <returns>Pooled Behaviour set to active</returns>
     public override T GetPooledObject()
     {
         for (int i = 0; i < pooledObjects.Count; ++i)

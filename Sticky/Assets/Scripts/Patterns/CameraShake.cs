@@ -1,5 +1,13 @@
-﻿using UnityEngine;
+﻿/***********************************************************************************
+ * CameraShake.cs
+ * Generic camera shaker from Generic Framework Project developed by Shaun Landy 
+***********************************************************************************/
 
+using UnityEngine;
+
+/// <summary>
+/// Shakes the camera given a strength and duration
+/// </summary>
 public class CameraShake : MonoBehaviour
 {
     private static CameraShake cameraShake = null;
@@ -28,17 +36,23 @@ public class CameraShake : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Manages the shaking of the camera
+    /// </summary>
     private void Update()
     {
+        //Only do if not paused
         if (!isShakingPaused)
         {
             if (isShaking)
             {
                 shakeTime += Time.deltaTime;
+                //Shakes the camera
                 if (shakeTime < shakeDuration)
                 {
                     camTransform.localPosition = originalLocalPosition + ((Random.insideUnitSphere * shakeStrength) * shakeDecayRate.Evaluate(shakeTime / shakeDuration));
                 }
+                //Set back to original position at the beginning of the shake
                 else
                 {
                     isShaking = false;
@@ -58,6 +72,11 @@ public class CameraShake : MonoBehaviour
         isShakingPaused = false;
     }
 
+    /// <summary>
+    /// Shakes the camera and can be called from anywhere
+    /// </summary>
+    /// <param name="_duration">How long the shake should last</param>
+    /// <param name="_strength">How strong the shake should be</param>
     public void ShakeCamera(float _duration, float _strength)
     {
         originalLocalPosition = camTransform.localPosition;
@@ -68,6 +87,9 @@ public class CameraShake : MonoBehaviour
     }
 }
 
+/// <summary>
+/// Editor functionality to test within the inspector
+/// </summary>
 #if UNITY_EDITOR
 [UnityEditor.CustomEditor(typeof(CameraShake))]
 public class CameraShakeEditor : UnityEditor.Editor
